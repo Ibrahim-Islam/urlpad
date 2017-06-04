@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>UrlPad</title>
+  </head>
+  <body>
+    <div class="container">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <div class="col-md-10">
+            <input spellcheck="false" id="enter-url" type="url" class="form-control" placeholder="Enter a URL">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-2">
+            <button type="button" onclick="parse()" class="btn btn-default">Break</button>
+          </div>
+        </div>
+      </form>
+
+      <hr />
+      
+      <div id="container">
+        <!--breakdowns will be populated here-->
+      </div>
+    </div>
+
+      <script type="text/javascript">
+        function parse(){
+          var url = document.getElementById('enter-url').value,
+              container = document.getElementById('container')
+          var result = url && UrlPad.parse(url);
+          container.innerHTML = '';
+          container.innerHTML += result;
+        }
+      </script>
+  <script type="text/javascript" src="vendor.ff7762db7bf7c4ae8298.js"></script><script type="text/javascript" src="app.e5d40067b4c49da6bd3e.js"></script></body>
+</html>
