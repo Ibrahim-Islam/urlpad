@@ -44,10 +44,10 @@ module.exports = {
     new Optimize.CommonsChunkPlugin({
       name: ['vendor']
     }),
-    // new Optimize.UglifyJsPlugin({
-    //   compress: {
-    //       warnings: false
-    //   }
-    // })
+    new Optimize.UglifyJsPlugin({
+      compress: {
+          warnings: false
+      }
+    })
   ]
 };
