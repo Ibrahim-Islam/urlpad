@@ -1,39 +1,87 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>UrlPad</title>
-  </head>
-  <body>
-    <div class="container">
-      <form class="form-horizontal">
-        <div class="form-group">
-          <div class="col-md-10">
-            <input spellcheck="false" id="enter-url" type="url" class="form-control" placeholder="Enter a URL">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-md-2">
-            <button type="button" onclick="parse()" class="btn btn-default">Break</button>
-          </div>
-        </div>
-      </form>
 
-      <hr />
-      
-      <div id="container">
-        <!--breakdowns will be populated here-->
+<head>
+  <meta charset="UTF-8">
+  <title>UrlPad</title>
+<link href="style.css" rel="stylesheet"></head>
+
+<body>
+  <div class="container">
+    <form class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-10">
+          <input spellcheck="false" id="enter-url" type="url" class="form-control" placeholder="Enter a URL">
+        </div>
+        <div class="col-sm-2">
+          <button type="button" onclick="parse()" class="btn btn-default">Parse</button>
+        </div>
       </div>
+    </form>
+    <hr />
+    <div id="container" class="form-horizontal">
+      <!--breakdowns will be populated here-->
     </div>
+    <div id="make-btn" class="col-sm-offset-6">
+      <button type="button" onclick="build()" class="btn btn-default">Build</button>
+    </div>
+    <br />
+    <div class="col-sm-12">
+      <input readonly spellcheck="false" id="build-url" type="url" class="form-control">
+    </div>
+  </div>
 
-      <script type="text/javascript">
-        function parse(){
-          var url = document.getElementById('enter-url').value,
-              container = document.getElementById('container')
-          var result = url && UrlPad.parse(url);
-          container.innerHTML = '';
-          container.innerHTML += result;
-        }
-      </script>
-  <script type="text/javascript" src="vendor.ff7762db7bf7c4ae8298.js"></script><script type="text/javascript" src="app.e5d40067b4c49da6bd3e.js"></script></body>
+  <script type="text/javascript">
+    function mapper(list) {
+      var result = [];
+      for (var i = 0; i < list.length; i++) {
+        var element = list[i];
+        result.push(element.value);
+      }
+      return result;
+    }
+    
+    function build() {
+      var protocol = document.getElementById('protocol'),
+          host = document.getElementById('host'),
+          hash = document.getElementById('hash'),
+          port = document.getElementById('port'),
+          path = document.querySelectorAll('.path'),
+          query = document.querySelectorAll('.query'),
+          result_url = document.getElementById('build-url'),
+          paths = mapper(path),
+          queries = mapper(query),
+          i = 0,
+          j = 0,
+          qo = {};
+
+      for (i = 0; i < (queries.length / 2); i++) {
+        qo[queries[i + j]] = queries[i + j + 1];
+        j++;
+      }
+
+      var o = {
+        protocol: protocol && protocol.value,
+        host: host && host.value,
+        port: port && port.value,
+        hash: hash && hash.value,
+        pathnames: paths,
+        query: qo
+      }
+
+      result_url.value = UrlPad.make(o);
+    }
+
+    function parse() {
+      var url = document.getElementById('enter-url').value,
+        container = document.getElementById('container'),
+        make_btn = document.getElementById('make-btn');
+
+      var result = UrlPad.parse(url);
+      container.innerHTML = '';
+      container.innerHTML += result;
+    }
+  </script>
+<script type="text/javascript" src="vendor.f7a2a6d84de4790c49d8.js"></script><script type="text/javascript" src="app.094ccb4e9724686f24fc.js"></script></body>
+
 </html>
